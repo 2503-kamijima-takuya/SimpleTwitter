@@ -13,6 +13,7 @@
     <body>
         <div class="main-contents">
 			<div class="header">
+				<%-- ログアウト時の表示 --%>
 			    <c:if test="${ empty loginUser }">
 			        <a href="login">ログイン</a>
 			        <a href="signup">登録する</a>
@@ -23,6 +24,8 @@
 			        <a href="logout">ログアウト</a>
 			    </c:if>
 			</div>
+			
+			<%-- ログイン時の表示 --%>
 			<c:if test="${ not empty loginUser }">
 			    <div class="profile">
 			        <div class="name"><h2><c:out value="${loginUser.name}" /></h2></div>
@@ -30,6 +33,8 @@
 			        <div class="description"><c:out value="${loginUser.description}" /></div>
 			    </div>
 			</c:if>
+			
+			<%-- エラーメッセージの表示 --%>
 			<c:if test="${ not empty errorMessages }">
 			    <div class="errorMessages">
 			        <ul>
@@ -41,6 +46,7 @@
 			    <c:remove var="errorMessages" scope="session" />
 			</c:if>
 
+			<%-- コメントフォームの表示 --%>
 			<div class="form-area">
 			    <c:if test="${ isShowMessageForm }">
 			        <form action="message" method="post">
@@ -51,6 +57,8 @@
 			        </form>
 			    </c:if>
 			</div>
+			
+			<%-- つぶやきの表示 --%>
 			<div class="messages">
 			    <c:forEach items="${messages}" var="message">
 			        <div class="message">
