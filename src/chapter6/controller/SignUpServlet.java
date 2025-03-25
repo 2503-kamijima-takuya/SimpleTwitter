@@ -57,11 +57,18 @@ public class SignUpServlet extends HttpServlet {
         List<String> errorMessages = new ArrayList<String>();
 
         User user = getUser(request);
+
+        User userSelect = new UserService().select(user.getAccount());
+        if(userSelect != null) {
+        	errorMessages.add("すでに存在するアカウントです");
+        }
+
         if (!isValid(user, errorMessages)) {
             request.setAttribute("errorMessages", errorMessages);
             request.getRequestDispatcher("signup.jsp").forward(request, response);
             return;
         }
+
         new UserService().insert(user);
         response.sendRedirect("./");
     }

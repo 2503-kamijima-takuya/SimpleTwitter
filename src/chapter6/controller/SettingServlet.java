@@ -63,6 +63,12 @@ public class SettingServlet extends HttpServlet {
 	    List<String> errorMessages = new ArrayList<String>();
 
 	    User user = getUser(request);
+
+	    User userSelect = new UserService().select(user.getAccount());
+        if(userSelect != null && userSelect.getId() != user.getId()) {
+        	errorMessages.add("すでに存在するアカウントです");
+        }
+
 	    if (isValid(user, errorMessages)) {
 	        try {
 	            new UserService().update(user);
