@@ -20,7 +20,6 @@ import chapter6.service.UserService;
 @WebServlet(urlPatterns = { "/signup" })
 public class SignUpServlet extends HttpServlet {
 
-
    /**
    * ロガーインスタンスの生成
    */
@@ -50,18 +49,12 @@ public class SignUpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-
 	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
         List<String> errorMessages = new ArrayList<String>();
 
         User user = getUser(request);
-
-        User userSelect = new UserService().select(user.getAccount());
-        if(userSelect != null) {
-        	errorMessages.add("すでに存在するアカウントです");
-        }
 
         if (!isValid(user, errorMessages)) {
             request.setAttribute("errorMessages", errorMessages);
@@ -74,7 +67,6 @@ public class SignUpServlet extends HttpServlet {
     }
 
     private User getUser(HttpServletRequest request) throws IOException, ServletException {
-
 
 	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -107,6 +99,11 @@ public class SignUpServlet extends HttpServlet {
             errorMessages.add("アカウント名を入力してください");
         } else if (20 < account.length()) {
             errorMessages.add("アカウント名は20文字以下で入力してください");
+        }
+
+        User userSelect = new UserService().select(account);
+        if(userSelect != null) {
+        	errorMessages.add("すでに存在するアカウントです");
         }
 
         if (StringUtils.isEmpty(password)) {
