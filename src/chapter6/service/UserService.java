@@ -7,13 +7,14 @@ import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang.StringUtils;
+
 import chapter6.beans.User;
 import chapter6.dao.UserDao;
 import chapter6.logging.InitApplication;
 import chapter6.utils.CipherUtil;
 
 public class UserService {
-
 
     /**
     * ロガーインスタンスの生成
@@ -31,7 +32,6 @@ public class UserService {
     }
 
     public void insert(User user) {
-
 
 	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -88,7 +88,6 @@ public class UserService {
 
     public User select(int userId) {
 
-
         log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
@@ -120,11 +119,10 @@ public class UserService {
         Connection connection = null;
         try {
             // パスワード暗号化
-        	if(user.getPassword().trim().isEmpty() == false) {
-        		String encPassword = CipherUtil.encrypt(user.getPassword());
-                user.setPassword(encPassword);
+        	if(StringUtils.isBlank(user.getPassword()) == false) {
+				String encPassword = CipherUtil.encrypt(user.getPassword());
+				user.setPassword(encPassword);
         	}
-
 
             connection = getConnection();
             new UserDao().update(connection, user);

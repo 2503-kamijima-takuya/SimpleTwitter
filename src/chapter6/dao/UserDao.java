@@ -11,13 +11,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang.StringUtils;
+
 import chapter6.beans.User;
 import chapter6.exception.NoRowsUpdatedRuntimeException;
 import chapter6.exception.SQLRuntimeException;
 import chapter6.logging.InitApplication;
 
 public class UserDao {
-
 
     /**
     * ロガーインスタンスの生成
@@ -31,13 +32,12 @@ public class UserDao {
     public UserDao(){
         InitApplication application = InitApplication.getInstance();
         application.init();
-
     }
 
     public void insert(Connection connection, User user) {
 
-	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-        " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
         PreparedStatement ps = null;
         try {
@@ -79,7 +79,6 @@ public class UserDao {
 
     public User select(Connection connection, String accountOrEmail, String password) {
 
-
   	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
           " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
@@ -115,8 +114,8 @@ public class UserDao {
 
       private List<User> toUsers(ResultSet rs) throws SQLException {
 
-  	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-          " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+		  " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
           List<User> users = new ArrayList<User>();
           try {
@@ -140,7 +139,6 @@ public class UserDao {
       }
 
       public User select(Connection connection, int id) {
-
 
     	    log.info(new Object(){}.getClass().getEnclosingClass().getName() +
     	    " : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -184,7 +182,7 @@ public class UserDao {
     	        sql.append("    account = ?, ");
     	        sql.append("    name = ?, ");
     	        sql.append("    email = ?, ");
-    	        if(user.getPassword().trim().isEmpty() == false) {
+    	        if(StringUtils.isBlank(user.getPassword()) == false) {
     	        	 sql.append("    password = ?, ");
     	        }
     	        sql.append("    description = ?, ");
@@ -197,7 +195,7 @@ public class UserDao {
     	        ps.setString(2, user.getName());
     	        ps.setString(3, user.getEmail());
 
-    	        if(user.getPassword().trim().isEmpty() == false) {
+    	        if(StringUtils.isBlank(user.getPassword()) == false) {
     	        	ps.setString(4, user.getPassword());
     	        	ps.setString(5, user.getDescription());
         	        ps.setInt(6, user.getId());
