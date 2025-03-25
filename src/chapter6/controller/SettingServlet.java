@@ -22,9 +22,9 @@ import chapter6.service.UserService;
 @WebServlet(urlPatterns = { "/setting" })
 public class SettingServlet extends HttpServlet {
 
-	/**
-	* ロガーインスタンスの生成
-	*/
+    /**
+    * ロガーインスタンスの生成
+    */
     Logger log = Logger.getLogger("twitter");
 
     /**

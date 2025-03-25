@@ -120,8 +120,8 @@ public class UserService {
         try {
             // パスワード暗号化
         	if(StringUtils.isBlank(user.getPassword()) == false) {
-				String encPassword = CipherUtil.encrypt(user.getPassword());
-				user.setPassword(encPassword);
+        		String encPassword = CipherUtil.encrypt(user.getPassword());
+        		user.setPassword(encPassword);
         	}
 
             connection = getConnection();
