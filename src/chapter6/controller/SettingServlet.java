@@ -40,7 +40,7 @@ public class SettingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+        log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
         HttpSession session = request.getSession();
@@ -56,8 +56,8 @@ public class SettingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 
-		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+        log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+	    " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
 	    HttpSession session = request.getSession();
 	    List<String> errorMessages = new ArrayList<String>();
@@ -79,14 +79,14 @@ public class SettingServlet extends HttpServlet {
 	        return;
 	    }
 
-        session.setAttribute("loginUser", user);
-        response.sendRedirect("./");
+	    session.setAttribute("loginUser", user);
+	    response.sendRedirect("./");
     }
 
     private User getUser(HttpServletRequest request) throws IOException, ServletException {
 
-		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+        log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+        " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
         User user = new User();
         user.setId(Integer.parseInt(request.getParameter("id")));
@@ -100,7 +100,7 @@ public class SettingServlet extends HttpServlet {
 
     private boolean isValid(User user, List<String> errorMessages) {
 
-	    log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+        log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
         String name = user.getName();
