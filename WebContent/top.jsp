@@ -18,13 +18,15 @@
 			        <a href="login">ログイン</a>
 			        <a href="signup">登録する</a>
 			    </c:if>
+
+			    <%-- ログイン時の表示 --%>
 			    <c:if test="${ not empty loginUser }">
 			        <a href="./">ホーム</a>
 			        <a href="setting">設定</a>
 			        <a href="logout">ログアウト</a>
 			    </c:if>
 			</div>
-			
+
 			<%-- ログイン時の表示 --%>
 			<c:if test="${ not empty loginUser }">
 			    <div class="profile">
@@ -33,7 +35,7 @@
 			        <div class="description"><c:out value="${loginUser.description}" /></div>
 			    </div>
 			</c:if>
-			
+
 			<%-- エラーメッセージの表示 --%>
 			<c:if test="${ not empty errorMessages }">
 			    <div class="errorMessages">
@@ -57,7 +59,7 @@
 			        </form>
 			    </c:if>
 			</div>
-			
+
 			<%-- つぶやきの表示 --%>
 			<div class="messages">
 			    <c:forEach items="${messages}" var="message">
@@ -72,6 +74,14 @@
 			            </div>
 			            <div class="text"><c:out value="${message.text}" /></div>
 			            <div class="date"><fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" /></div>
+			        </div>
+
+			        <%-- 投稿の削除ボタン --%>
+			        <div class="delete">
+				        	<form action="deleteMessage" method="post">
+				        		<input type="button" value="削除">
+				        		<input type="hidden" name="messageId" value="${message.id}">
+				        	</form>
 			        </div>
 			    </c:forEach>
 			</div>

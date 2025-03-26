@@ -48,6 +48,7 @@ public class TopServlet extends HttpServlet {
             isShowMessageForm = true;
         }
 
+        // user_idがあればそのユーザーの投稿だけ、なければ全ユーザーの投稿を表示するための変数
         String userId = request.getParameter("user_id");
 
         List<UserMessage> messages = new MessageService().select(userId);
