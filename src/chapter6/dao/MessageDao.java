@@ -4,7 +4,10 @@ import static chapter6.utils.CloseableUtil.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,14 +75,102 @@ public class MessageDao {
           PreparedStatement ps = null;
           try {
               StringBuilder sql = new StringBuilder();
-              sql.append("DELETE FROM messages ( ");
+              sql.append("DELETE FROM messages ");
               sql.append("WHERE ");
               sql.append("id = ? ");
-              sql.append(")");
 
               ps = connection.prepareStatement(sql.toString());
 
               ps.setInt(1, message.getId());
+
+              ps.executeUpdate();
+          } catch (SQLException e) {
+  		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+              throw new SQLRuntimeException(e);
+          } finally {
+              close(ps);
+          }
+      }
+
+    public Message select(Connection connection, int messageId) {
+
+  	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+          " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+
+          PreparedStatement ps = null;
+          try {
+              StringBuilder sql = new StringBuilder();
+
+          	sql.append("SELECT ");
+              sql.append("* FROM messages ");
+              sql.append("WHERE ");
+              sql.append("id = ? ");
+
+              ps = connection.prepareStatement(sql.toString());
+              	ps.setInt(1, messageId);
+
+              ResultSet rs = ps.executeQuery();
+
+              List<Message> messages = toMessages(rs);
+              if (messages.isEmpty()) {
+                  return null;
+              } else if (2 <= messages.size()) {
+  		    log.log(Level.SEVERE,"メッセージが重複しています",
+                  new IllegalStateException());
+                  throw new IllegalStateException("メッセージが重複しています");
+              } else {
+                  return messages.get(0);
+              }
+          } catch (SQLException e) {
+  		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+              throw new SQLRuntimeException(e);
+          } finally {
+              close(ps);
+          }
+      }
+
+    private List<Message> toMessages(ResultSet rs) throws SQLException {
+
+  	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+  	  " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+
+
+  	  List<Message> messages = new ArrayList<Message>();
+	  try {
+		  while (rs.next()) {
+			Message message = new Message();
+	    	message.setId(rs.getInt("id"));
+	    	message.setUserId(rs.getInt("user_id"));
+	    	message.setText(rs.getString("text"));
+	    	message.setCreatedDate(rs.getTimestamp("created_date"));
+	    	message.setUpdatedDate(rs.getTimestamp("updated_date"));
+
+	    	messages.add(message);
+          }
+
+	        return messages;
+	    } finally {
+	        close(rs);
+	    }
+    }
+
+    public void update(Connection connection, Message message) {
+
+  	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+          " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+
+          PreparedStatement ps = null;
+          try {
+              StringBuilder sql = new StringBuilder();
+              sql.append("UPDATE messages SET ");
+              sql.append("text = ? ");
+              sql.append("WHERE ");
+              sql.append("id = ? ");
+
+              ps = connection.prepareStatement(sql.toString());
+
+              ps.setString(1, message.getText());
+              ps.setInt(2, message.getId());
 
               ps.executeUpdate();
           } catch (SQLException e) {

@@ -72,17 +72,27 @@
 							</span>
 			                <span class="name"><c:out value="${message.name}" /></span>
 			            </div>
-			            <div class="text"><c:out value="${message.text}" /></div>
+			            <div class="text"><pre><c:out value="${message.text}" /></pre></div>
 			            <div class="date"><fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" /></div>
 			        </div>
 
 			        <%-- 投稿の削除ボタン --%>
-			        <div class="delete">
+			        <c:if test="${ loginUser.id == message.userId }">
+				        <div class="delete">
 				        	<form action="deleteMessage" method="post">
-				        		<input type="button" value="削除">
 				        		<input type="hidden" name="messageId" value="${message.id}">
+				        		<input type="submit" value="削除">
 				        	</form>
-			        </div>
+				        </div>
+
+				        <%-- 投稿の編集ボタン --%>
+				        <div class="update">
+				        	<form action="edit" method="get">
+				        		<input type="hidden" name="messageId" value="${message.id}">
+				        		<input type="submit" value="編集">
+				        	</form>
+				        </div>
+			        </c:if>
 			    </c:forEach>
 			</div>
             <div class="copyright"> Copyright(c)上島　卓也</div>
