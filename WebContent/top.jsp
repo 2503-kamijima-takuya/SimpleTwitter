@@ -93,6 +93,35 @@
 				        	</form>
 				        </div>
 			        </c:if>
+
+			        <%-- 返信フォームの表示 --%>
+					<div class="commentform-area">
+					    <c:if test="${ not empty loginUser }">
+					        <form action="comment" method="post">
+					            <br />
+					            <textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
+					            <br />
+					            <input type="hidden" name="messageId" value="${ message.id }">
+					            <input type="submit" value="返信">（140文字まで）
+					        </form>
+					    </c:if>
+
+					    <%-- 返信コメントの表示 --%>
+					    <c:forEach items="${messages}" var="message">
+					        <div class="message">
+					            <div class="account-name">
+									<span class="account">
+									    <a href="./?user_id=<c:out value="${message.userId}"/> ">
+									        <c:out value="${message.account}" />
+									    </a>
+									</span>
+					                <span class="name"><c:out value="${message.name}" /></span>
+					            </div>
+					            <div class="text"><pre><c:out value="${message.text}" /></pre></div>
+					            <div class="date"><fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" /></div>
+					        </div>
+					    </c:forEach>
+					</div>
 			    </c:forEach>
 			</div>
             <div class="copyright"> Copyright(c)上島　卓也</div>
