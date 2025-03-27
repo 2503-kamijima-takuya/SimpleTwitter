@@ -9,42 +9,42 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import chapter6.beans.Message;
 import chapter6.logging.InitApplication;
 import chapter6.service.MessageService;
-
 
 @WebServlet(urlPatterns = { "/deleteMessage" })
 public class DeleteMessageServlet extends HttpServlet {
 
-    /**
-    * ロガーインスタンスの生成
-    */
-    Logger log = Logger.getLogger("twitter");
+	/**
+	* ロガーインスタンスの生成
+	*/
+	Logger log = Logger.getLogger("twitter");
 
-    /**
-    * デフォルトコンストラクタ
-    * アプリケーションの初期化を実施する。
-    */
-    public DeleteMessageServlet() {
-        InitApplication application = InitApplication.getInstance();
-        application.init();
+	/**
+	* デフォルトコンストラクタ
+	* アプリケーションの初期化を実施する。
+	*/
+	public DeleteMessageServlet() {
+		InitApplication application = InitApplication.getInstance();
+		application.init();
 
-    }
+	}
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 
-	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-        " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		log.info(new Object() {
+		}.getClass().getEnclosingClass().getName() +
+				" : " + new Object() {
+				}.getClass().getEnclosingMethod().getName());
 
-	  int messageId = Integer.parseInt(request.getParameter("messageId"));
+		int messageId = Integer.parseInt(request.getParameter("messageId"));
 
-	  Message message = new Message();
-	  message.setId(messageId);
+		//	  Message message = new Message();
+		//	  message.setId(messageId);
 
-	  new MessageService().delete(message);
-	  response.sendRedirect("./");
-    }
+		new MessageService().delete(messageId);
+		response.sendRedirect("./");
+	}
 }
