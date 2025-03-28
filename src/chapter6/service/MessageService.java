@@ -68,6 +68,8 @@ public class MessageService {
 				}.getClass().getEnclosingMethod().getName());
 
 		final int LIMIT_NUM = 1000;
+		String start = "2020/01/01 00:00:00";
+		String end = "";
 
 		Connection connection = null;
 
@@ -78,7 +80,7 @@ public class MessageService {
 
 		try {
 			connection = getConnection();
-			List<UserMessage> messages = new UserMessageDao().select(connection, id, LIMIT_NUM);
+			List<UserMessage> messages = new UserMessageDao().select(connection, id, start, end, LIMIT_NUM);
 			commit(connection);
 
 			return messages;

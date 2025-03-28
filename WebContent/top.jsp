@@ -107,18 +107,20 @@
 					    </c:if>
 
 					    <%-- 返信コメントの表示 --%>
-					    <c:forEach items="${messages}" var="message">
-					        <div class="message">
-					            <div class="account-name">
-									<span class="account">
-									    <a href="./?user_id=<c:out value="${message.userId}"/> ">
-									        <c:out value="${message.account}" />
-									    </a>
-									</span>
-					                <span class="name"><c:out value="${message.name}" /></span>
-					            </div>
-					            <div class="text"><pre><c:out value="${message.text}" /></pre></div>
-					            <div class="date"><fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" /></div>
+					    <c:forEach items="${comments}" var="comment">
+					        <div class="comment">
+					        	<c:if test="${ message.id == comment.messageId }">
+						            <div class="account-name">
+										<span class="account">
+										    <a href="./?user_id=<c:out value="${comment.userId}"/> ">
+										        <c:out value="${comment.account}" />
+										    </a>
+										</span>
+						                <span class="name"><c:out value="${comment.name}" /></span>
+						            </div>
+						            <div class="text"><pre><c:out value="${comment.text}" /></pre></div>
+						            <div class="date"><fmt:formatDate value="${comment.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" /></div>
+					            </c:if>
 					        </div>
 					    </c:forEach>
 					</div>

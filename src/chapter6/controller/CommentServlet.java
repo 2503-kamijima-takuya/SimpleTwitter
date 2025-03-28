@@ -19,7 +19,6 @@ import chapter6.beans.User;
 import chapter6.logging.InitApplication;
 import chapter6.service.CommentService;
 
-
 @WebServlet(urlPatterns = { "/comment" })
 public class CommentServlet extends HttpServlet {
 
@@ -49,23 +48,24 @@ public class CommentServlet extends HttpServlet {
 		String text = request.getParameter("text");
 		int messageId = Integer.parseInt(request.getParameter("messageId"));
 
-		 List<String> errorMessages = new ArrayList<String>();
-		 if (!isValid(text, errorMessages)) {
-			request.setAttribute("errorMessages", errorMessages);
-			request.getRequestDispatcher("top.jsp").forward(request, response);
+		HttpSession session = request.getSession();
+		List<String> errorMessages = new ArrayList<String>();
+		if (!isValid(text, errorMessages)) {
+			session.setAttribute("errorMessages", errorMessages);
+            response.sendRedirect("./");
 			return;
-		 }
+		}
 
-		 HttpSession session = request.getSession();
-		 User user = (User)session.getAttribute("loginUser");
 
-		 Comment comment = new Comment();
-		 comment.setText(text);
-		 comment.setMessageId(messageId);
-		 comment.setUserId(user.getId());
+		User user = (User) session.getAttribute("loginUser");
 
-		 new CommentService().insert(comment);
-		 response.sendRedirect("./");
+		Comment comment = new Comment();
+		comment.setText(text);
+		comment.setMessageId(messageId);
+		comment.setUserId(user.getId());
+
+		new CommentService().insert(comment);
+		response.sendRedirect("./");
 	}
 
 	private boolean isValid(String text, List<String> errorMessages) {

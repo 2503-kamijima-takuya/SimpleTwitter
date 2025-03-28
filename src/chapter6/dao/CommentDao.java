@@ -68,5 +68,4 @@ public class CommentDao {
 			close(ps);
 		}
 	}
-
 }
