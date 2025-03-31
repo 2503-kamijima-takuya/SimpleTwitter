@@ -54,8 +54,10 @@ public class TopServlet extends HttpServlet {
 
 		// user_idがあればそのユーザーの投稿だけ、なければ全ユーザーの投稿を表示するための変数
 		String userId = request.getParameter("user_id");
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
 
-		List<UserMessage> messages = new MessageService().select(userId);
+		List<UserMessage> messages = new MessageService().select(userId, startDate, endDate);
 		List<UserComment> comments = new UserCommentService().select();
 
 		request.setAttribute("messages", messages);

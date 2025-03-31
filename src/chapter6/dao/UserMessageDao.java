@@ -51,11 +51,11 @@ public class UserMessageDao {
             sql.append("FROM messages ");
             sql.append("INNER JOIN users ");
             sql.append("ON messages.user_id = users.id ");
-            sql.append("WHERE ");
-            sql.append("'?' <= post_datetime and post_datetime < '?' "); // つぶやきの絞り込み
-            sql.append(" ");
+            sql.append("WHERE messages.created_date ");
+            sql.append("BETWEEN ? AND ? "); // つぶやきの絞り込み
+//            sql.append(""); // つぶやきの絞り込み
             if(id != null) {
-            	sql.append("users.id = ? ");
+            	sql.append("AND users.id = ? ");
             }
             sql.append("ORDER BY created_date DESC limit " + num);
 

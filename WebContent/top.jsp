@@ -27,7 +27,7 @@
 			    </c:if>
 			</div>
 
-			<%-- ログイン時の表示 --%>
+			<%-- ログイン時のユーザー情報の表示 --%>
 			<c:if test="${ not empty loginUser }">
 			    <div class="profile">
 			        <div class="name"><h2><c:out value="${loginUser.name}" /></h2></div>
@@ -47,6 +47,14 @@
 			    </div>
 			    <c:remove var="errorMessages" scope="session" />
 			</c:if>
+
+			<%-- 絞り込み機能のカレンダーの表示 --%>
+			<div class="calender">
+				<form action="./" method="get">
+					日付：<input name="startDate" type="date"> ～ <input name="endDate" type="date">
+					<input type="submit" value="絞り込み">
+				</form>
+			</div>
 
 			<%-- コメントフォームの表示 --%>
 			<div class="form-area">
