@@ -51,7 +51,7 @@
 			<%-- 絞り込み機能のカレンダーの表示 --%>
 			<div class="calender">
 				<form action="./" method="get">
-					日付：<input name="startDate" type="date"> ～ <input name="endDate" type="date">
+					日付：<input name="start" type="date"  value="${param.startDate}"> ～ <input name="end" type="date" value="${param.endDate}">
 					<input type="submit" value="絞り込み">
 				</form>
 			</div>
