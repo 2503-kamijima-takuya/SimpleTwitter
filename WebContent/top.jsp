@@ -51,7 +51,8 @@
 			<%-- 絞り込み機能のカレンダーの表示 --%>
 			<div class="calender">
 				<form action="./" method="get">
-					日付：<input name="start" type="date"  value="${param.startDate}"> ～ <input name="end" type="date" value="${param.endDate}">
+					日付：<input name="start" type="date"  value="${param.start}">
+					 ～ <input name="end" type="date" value="${param.end}">
 					<input type="submit" value="絞り込み">
 				</form>
 			</div>
@@ -81,7 +82,8 @@
 			                <span class="name"><c:out value="${message.name}" /></span>
 			            </div>
 			            <div class="text"><pre><c:out value="${message.text}" /></pre></div>
-			            <div class="date"><fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" /></div>
+			            <div class="date"><fmt:formatDate value="${message.createdDate}"
+			            pattern="yyyy/MM/dd HH:mm:ss" /></div>
 			        </div>
 
 			        <%-- 投稿の削除ボタン --%>
@@ -127,7 +129,8 @@
 						                <span class="name"><c:out value="${comment.name}" /></span>
 						            </div>
 						            <div class="text"><pre><c:out value="${comment.text}" /></pre></div>
-						            <div class="date"><fmt:formatDate value="${comment.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" /></div>
+						            <div class="date"><fmt:formatDate value="${comment.createdDate}"
+						            pattern="yyyy/MM/dd HH:mm:ss" /></div>
 					            </c:if>
 					        </div>
 					    </c:forEach>

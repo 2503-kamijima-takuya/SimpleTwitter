@@ -31,7 +31,7 @@ public class LoginFilter implements Filter {
 			List<String> errorMessages = new ArrayList<String>();
 			errorMessages.add("ログインしてください");
 			session.setAttribute("errorMessages", errorMessages);
-			((HttpServletResponse)response).sendRedirect("./login");
+			((HttpServletResponse) response).sendRedirect("./login");
 			return;
 		}
 		chain.doFilter(request, response); // サーブレットを実行

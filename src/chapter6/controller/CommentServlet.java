@@ -52,10 +52,9 @@ public class CommentServlet extends HttpServlet {
 		List<String> errorMessages = new ArrayList<String>();
 		if (!isValid(text, errorMessages)) {
 			session.setAttribute("errorMessages", errorMessages);
-            response.sendRedirect("./");
+			response.sendRedirect("./");
 			return;
 		}
-
 
 		User user = (User) session.getAttribute("loginUser");
 
